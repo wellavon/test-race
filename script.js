@@ -367,8 +367,6 @@ function generateRankingPage() {
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
             </div>
-            <h1 class="page-title">профайлы рэйсеров</h1>
-            <div class="ranking-info"></div>
             <h2 class="page-title">менторы</h2>
             <div class="racers-container">
                 ${topTwoHTML}
