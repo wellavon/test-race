@@ -617,11 +617,11 @@ function generateCatalogPage() {
                         <i class="fas fa-arrow-left"></i> Назад
                     </button>
                 </div>
-                <h1 class="page-title">Каталог хореографий</h1>
+                <h1 class="page-title">Каталог проектов</h1>
                 <div class="catalog-empty">
                     <i class="fas fa-folder-open"></i>
                     <p>Каталог пока пуст</p>
-                    <p class="catalog-empty-sub">Следи за обновлениями — хореографии появятся здесь после публикации</p>
+                    <p class="catalog-empty-sub">Следи за обновлениями — проекты появятся здесь</p>
                 </div>
             </div>
         `;
@@ -667,9 +667,9 @@ function generateCatalogPage() {
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
             </div>
-            <h1 class="page-title">Каталог хореографий</h1>
+            <h1 class="page-title">Каталог проектов</h1>
             <div class="catalog-info">
-                Выбери хореографию и нажми «Откликнуться» — форма заявки откроется
+                Выбери проект и нажми «Откликнуться» — форма заявки откроется
                 с уже выбранным проектом.
             </div>
             <div class="catalog-grid">
@@ -699,7 +699,7 @@ function generateApplyPage(preselectedProject = '') {
                     <i class="fas fa-arrow-left"></i> К каталогу
                 </button>
             </div>
-            <h1 class="page-title">Заявка на хореографию</h1>
+            <h1 class="page-title">Заявка на участие в проекте</h1>
 
             <div class="apply-info">
                 Заполни форму для участия в проекте — заявка уйдёт напрямую менторам.
@@ -720,7 +720,7 @@ function generateApplyPage(preselectedProject = '') {
                 </div>
 
                 <div class="form-group">
-                    <label for="applyProject">На какую хореографию откликаешься? <span class="required">*</span></label>
+                    <label for="applyProject">На какой проект откликаешься? <span class="required">*</span></label>
                     <select id="applyProject" name="project" required>
                         <option value="">— Выбери проект —</option>
                         ${projectsOptions}
