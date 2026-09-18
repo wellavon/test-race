@@ -233,7 +233,6 @@ body {
     overflow: hidden;
 }
 
-/* Все страницы — с центрированием по умолчанию */
 .about-page,
 .ranking-page,
 .catalog-page,
@@ -252,7 +251,6 @@ body {
     padding-top: 20px;
 }
 
-/* Заголовки — ВСЕГДА по центру */
 .page-title {
     font-family: 'ZenDotsKir', sans-serif;
     font-size: 2.2rem;
@@ -494,7 +492,7 @@ body {
 }
 
 /* ============================================================
-   РЭЙСЕРЫ (увеличены по высоте)
+   РЭЙСЕРЫ
    ============================================================ */
 
 .racers-container {
@@ -513,7 +511,7 @@ body {
     position: relative;
     transition: all 0.3s ease;
     transform: perspective(500px) rotateY(3deg) rotateX(0deg) rotateZ(-1deg);
-    height: 330px; /* было 280, стало 330 */
+    min-height: 330px;
     overflow: hidden;
 }
 
@@ -563,7 +561,7 @@ body {
     top: 65px;
     left: 15px;
     width: 130px;
-    height: 215px; /* было 165, стало 215 */
+    height: 220px;
     background-color: #111;
     border-radius: 8px;
     display: flex;
@@ -1457,8 +1455,22 @@ body {
 }
 
 @media (max-width: 576px) {
-    .racers-container { grid-template-columns: 1fr; }
-    .id-card { height: 300px; }
+    .racers-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .id-card {
+        height: auto;
+        min-height: 300px;
+        transform: none !important;
+        padding: 15px;
+    }
+
+    .id-card:hover {
+        transform: translateY(-5px) !important;
+    }
+
     .buttons-container { flex-direction: column; align-items: center; }
     .menu-btn { width: 100%; max-width: 300px; }
 
@@ -1521,10 +1533,15 @@ body {
 
     .back-btn { padding: 8px 15px; font-size: 0.85rem; }
 
-    /* Карточки рэйсеров на мобильных — тоже выше */
+    /* КАРТОЧКИ РЭЙСЕРОВ: резиновая высота, фото не режется */
+    .racers-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
     .id-card {
         height: auto;
-        min-height: 260px;
+        min-height: 300px;
         padding: 12px;
         transform: none !important;
     }
@@ -1533,25 +1550,64 @@ body {
         transform: translateY(-5px) !important;
     }
 
-    .card-logo { width: 120px; height: 24px; font-size: 0.6rem; top: 15px; left: 8px; }
-    .racer-photo-container { width: 120px; height: 200px; top: 50px; left: 8px; font-size: 1.5rem; }
+    .card-logo {
+        width: 110px;
+        height: 24px;
+        font-size: 0.6rem;
+        top: 15px;
+        left: 8px;
+    }
+
+    .racer-photo-container {
+        width: 120px;
+        height: 220px;
+        top: 50px;
+        left: 8px;
+        font-size: 1.5rem;
+    }
 
     .racer-info {
         position: relative;
         top: auto;
         right: auto;
         width: calc(100% - 140px);
-        gap: 6px;
+        gap: 8px;
         margin-top: 6px;
         margin-left: 140px;
     }
 
-    .info-item { font-size: 0.9rem; padding-bottom: 14px; }
-    .info-label { font-size: 0.8rem; margin-right: 10px; }
-    .info-value { font-size: 0.85rem; }
-    .racer-signature { font-size: 1.8rem; bottom: 8px; right: 12px; }
-    .neon-stripe { bottom: 6px; width: 50%; }
+    .info-item {
+        font-size: 0.9rem;
+        padding-bottom: 14px;
+    }
 
-    .main-content { padding: 15px; min-height: auto; }
-    .about-page, .ranking-page { padding-top: 15px; }
+    .info-label {
+        font-size: 0.8rem;
+        margin-right: 10px;
+    }
+
+    .info-value {
+        font-size: 0.85rem;
+    }
+
+    .racer-signature {
+        font-size: 1.8rem;
+        bottom: 8px;
+        right: 12px;
+    }
+
+    .neon-stripe {
+        bottom: 6px;
+        width: 50%;
+    }
+
+    .main-content {
+        padding: 15px;
+        min-height: auto;
+    }
+
+    .about-page,
+    .ranking-page {
+        padding-top: 15px;
+    }
 }
