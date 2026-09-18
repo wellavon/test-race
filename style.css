@@ -1599,6 +1599,416 @@ body {
     transform: scale(0.97);
 }
 
+/* ============================================================
+   КРАСИВАЯ ОТПРАВКА ФОРМЫ
+   ============================================================ */
+
+/* Кнопка "Отправка" с точками */
+.submit-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.submit-btn.loading {
+    border-color: #0f0;
+    color: #0f0;
+    cursor: wait;
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.05), rgba(0, 255, 0, 0.15));
+}
+
+.submit-btn.success {
+    border-color: #0f0;
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 255, 0, 0.35));
+    color: #0f0;
+    box-shadow: 0 0 40px rgba(0, 255, 0, 0.6), inset 0 0 20px rgba(0, 255, 0, 0.2);
+    animation: successPulse 0.6s ease;
+}
+
+@keyframes successPulse {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.06); }
+    100% { transform: scale(1); }
+}
+
+/* Точки загрузки */
+.btn-loader {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: 10px;
+}
+
+.loader-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #0f0;
+    box-shadow: 0 0 8px #0f0;
+    animation: loaderBounce 1.4s infinite ease-in-out both;
+}
+
+.loader-dot:nth-child(1) { animation-delay: -0.32s; }
+.loader-dot:nth-child(2) { animation-delay: -0.16s; }
+.loader-dot:nth-child(3) { animation-delay: 0s; }
+
+@keyframes loaderBounce {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Галочка успеха */
+.btn-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #0f0;
+    color: #000;
+    margin-right: 10px;
+    animation: checkPop 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 15px #0f0;
+}
+
+.btn-check i {
+    font-size: 12px;
+    font-weight: 900;
+}
+
+@keyframes checkPop {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.2) rotate(10deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+/* Затемнение формы во время отправки */
+.apply-form.form-sending {
+    pointer-events: none;
+    opacity: 0.7;
+    filter: blur(0.5px);
+    transition: all 0.3s ease;
+}
+
+.apply-form.form-sending::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.3) 100%);
+    pointer-events: none;
+}
+
+.apply-form {
+    position: relative;
+}
+
+/* Тряска полей с ошибкой */
+.form-group input.shake,
+.form-group select.shake,
+.form-group textarea.shake {
+    animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    border-color: #ff6b6b !important;
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.5) !important;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translateX(-2px); }
+    20%, 80% { transform: translateX(4px); }
+    30%, 50%, 70% { transform: translateX(-6px); }
+    40%, 60% { transform: translateX(6px); }
+}
+
+/* ============================================================
+   МОДАЛКА УСПЕХА
+   ============================================================ */
+
+.success-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+    animation: fadeIn 0.35s ease;
+    opacity: 1;
+    transition: opacity 0.35s ease;
+}
+
+.success-modal-overlay.closing {
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.success-modal {
+    position: relative;
+    background: linear-gradient(145deg, rgba(10, 20, 10, 0.98), rgba(0, 0, 0, 0.98));
+    border: 2px solid rgba(0, 255, 0, 0.4);
+    border-radius: 20px;
+    padding: 50px 40px 40px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow:
+        0 0 60px rgba(0, 255, 0, 0.4),
+        0 20px 60px rgba(0, 0, 0, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    animation: modalSlideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(40px) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.success-modal-glow {
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(0, 255, 0, 0.3) 0%, transparent 70%);
+    pointer-events: none;
+    animation: glowPulse 3s infinite alternate;
+}
+
+@keyframes glowPulse {
+    0% { opacity: 0.4; transform: translateX(-50%) scale(1); }
+    100% { opacity: 0.8; transform: translateX(-50%) scale(1.1); }
+}
+
+.success-check-wrapper {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 25px;
+    position: relative;
+    filter: drop-shadow(0 0 25px rgba(0, 255, 0, 0.6));
+}
+
+.success-check-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.success-check-circle {
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    animation: drawCircle 0.7s ease-out forwards;
+    animation-delay: 0.1s;
+}
+
+.success-check-mark {
+    stroke-dasharray: 70;
+    stroke-dashoffset: 70;
+    animation: drawCheck 0.5s ease-out forwards;
+    animation-delay: 0.7s;
+}
+
+@keyframes drawCircle {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes drawCheck {
+    to { stroke-dashoffset: 0; }
+}
+
+.success-modal-title {
+    font-family: 'ZenDotsKir', sans-serif;
+    font-size: 1.6rem;
+    color: #0f0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+    animation: fadeInUp 0.6s ease 0.9s both;
+}
+
+.success-modal-subtitle {
+    font-family: 'ZenDotsKir', sans-serif;
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    animation: fadeInUp 0.6s ease 1.05s both;
+}
+
+.success-modal-project {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-family: 'ZenDotsKir', sans-serif;
+    font-size: 0.9rem;
+    color: #0f0;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    animation: fadeInUp 0.6s ease 1.2s both;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.success-modal-project i {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.success-modal-btn {
+    font-family: 'ZenDotsKir', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0f0, #0a0);
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 40px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 5px 20px rgba(0, 255, 0, 0.4);
+    animation: fadeInUp 0.6s ease 1.35s both;
+}
+
+.success-modal-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 255, 0, 0.7);
+}
+
+.success-modal-btn:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+/* Мобильная адаптация */
+@media (max-width: 576px) {
+    .success-modal {
+        padding: 40px 25px 30px;
+    }
+
+    .success-check-wrapper {
+        width: 90px;
+        height: 90px;
+    }
+
+    .success-modal-title {
+        font-size: 1.3rem;
+    }
+
+    .success-modal-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .success-modal-project {
+        font-size: 0.8rem;
+        padding: 8px 14px;
+    }
+
+    .success-modal-btn {
+        font-size: 0.9rem;
+        padding: 12px 30px;
+    }
+}
+
+/* ============================================================
+   ТОСТ ОШИБКИ
+   ============================================================ */
+
+.error-toast {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: linear-gradient(135deg, rgba(40, 0, 0, 0.95), rgba(20, 0, 0, 0.95));
+    border: 2px solid #ff6b6b;
+    border-radius: 12px;
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'ZenDotsKir', sans-serif;
+    font-size: 0.95rem;
+    color: #fff;
+    box-shadow: 0 0 30px rgba(255, 107, 107, 0.5), 0 10px 30px rgba(0, 0, 0, 0.8);
+    z-index: 10001;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+    opacity: 0;
+    max-width: 90vw;
+}
+
+.error-toast.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.error-toast i {
+    color: #ff6b6b;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    animation: warningPulse 1s infinite alternate;
+}
+
+@keyframes warningPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+}
+
+@media (max-width: 576px) {
+    .error-toast {
+        font-size: 0.85rem;
+        padding: 12px 18px;
+        top: 20px;
+    }
+}
+
 @media (max-width: 576px) {
     .catalog-grid {
         grid-template-columns: 1fr;
