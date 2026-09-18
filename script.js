@@ -360,7 +360,7 @@ function generateHomePage() {
                     <i class="fas fa-users"></i> рэйсеры
                 </button>
                 <button class="menu-btn" onclick="loadContent('catalog')">
-                    <i class="fas fa-folder-open"></i> проекты
+                    <i class="fas fa-folder-open"></i> каталог проектов
                 </button>
             </div>
             <div class="social-buttons-container">
