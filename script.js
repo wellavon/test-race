@@ -45,8 +45,7 @@ function updateRacerScores() {
 }
 
 // ============================================================
-// ПОРТФОЛИО: миссии, которые ты заводишь вручную (НЕ ТРОГАЕМ)
-// Они показываются на странице «О системе» → «Портфолио рэйсеров»
+// ПОРТФОЛИО: миссии, которые заводишь вручную
 // ============================================================
 
 const missionData = [
@@ -85,8 +84,7 @@ const missionData = [
 ];
 
 // ============================================================
-// КАТАЛОГ: миссии, которые добавляются ТОЛЬКО через ТГ-бота
-// Хранятся в missions.json в репозитории
+// КАТАЛОГ: миссии из missions.json (добавляются через бота)
 // ============================================================
 
 let catalogData = [];
@@ -311,7 +309,6 @@ async function loadContent(page, params = {}) {
             break;
 
         case 'about':
-            // Портфолио рэйсеров — из missionData, ничего не грузим
             contentDiv.innerHTML = generateAboutPage();
             break;
 
@@ -384,7 +381,7 @@ function generateHomePage() {
     `;
 }
 
-// === О СИСТЕМЕ (с портфолио!) ===
+// === О СИСТЕМЕ ===
 
 function generateAboutPage() {
     let missionsHTML = '';
@@ -609,7 +606,7 @@ function closeRacerAchievements(event) {
     }
 }
 
-// === КАТАЛОГ ХОРЕОГРАФИЙ (только из missions.json) ===
+// === КАТАЛОГ ===
 
 function generateCatalogPage() {
     if (!catalogData || catalogData.length === 0) {
@@ -632,27 +629,36 @@ function generateCatalogPage() {
 
     const sorted = [...catalogData].sort((a, b) => b.id - a.id);
 
-    const cardsHTML = sorted.map(mission => `
-        <div class="catalog-card">
-            <div class="catalog-img">
-                <img src="${mission.image}.jpeg" alt="${mission.name}"
-                     onerror="this.src='${mission.image}.png'; this.onerror=function(){this.style.display='none'; this.parentElement.innerHTML='<span style=\\'color:#666;font-size:3rem\\'>📷</span>'}">
-                <div class="catalog-badge">ID ${mission.id}</div>
-            </div>
-            <div class="catalog-body">
-                <h3 class="catalog-title">${mission.name}</h3>
-                <div class="catalog-actions">
-                    <a href="${mission.link}" target="_blank" rel="noopener noreferrer" class="catalog-btn catalog-btn-watch">
-                        <i class="fas fa-play"></i> Смотреть
-                    </a>
-                    <button class="catalog-btn catalog-btn-apply"
-                            onclick="loadContent('apply', { project: 'Миссия ${mission.id}' })">
-                        <i class="fas fa-paper-plane"></i> Откликнуться
-                    </button>
+    const cardsHTML = sorted.map(mission => {
+        const displayTitle = mission.title || mission.name || `Миссия ${mission.id}`;
+        const displayArtist = mission.artist || '';
+        const fullLabel = displayArtist ? `${displayArtist} - ${displayTitle}` : displayTitle;
+        // Экранируем кавычки для onclick
+        const safeLabel = fullLabel.replace(/'/g, "\\'");
+
+        return `
+            <div class="catalog-card">
+                <div class="catalog-img">
+                    <img src="${mission.image}.jpeg" alt="${fullLabel}"
+                         onerror="this.src='${mission.image}.png'; this.onerror=function(){this.style.display='none'; this.parentElement.innerHTML='<span style=\\'color:#666;font-size:3rem\\'>📷</span>'}">
+                    <div class="catalog-badge">ID ${mission.id}</div>
+                </div>
+                <div class="catalog-body">
+                    ${displayArtist ? `<div class="catalog-artist">${displayArtist}</div>` : ''}
+                    <h3 class="catalog-title">${displayTitle}</h3>
+                    <div class="catalog-actions">
+                        <a href="${mission.link}" target="_blank" rel="noopener noreferrer" class="catalog-btn catalog-btn-watch">
+                            <i class="fas fa-play"></i> Смотреть
+                        </a>
+                        <button class="catalog-btn catalog-btn-apply"
+                                onclick="loadContent('apply', { project: '${safeLabel}' })">
+                            <i class="fas fa-paper-plane"></i> Откликнуться
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 
     return `
         <div class="catalog-page">
@@ -679,8 +685,11 @@ function generateApplyPage(preselectedProject = '') {
     const allProjects = [...catalogData].sort((a, b) => b.id - a.id);
 
     const projectsOptions = allProjects.map(p => {
-        const selected = (String(p.name) === String(preselectedProject)) ? ' selected' : '';
-        return `<option value="${p.name}"${selected}>${p.name}</option>`;
+        const displayTitle = p.title || p.name || `Миссия ${p.id}`;
+        const displayArtist = p.artist || '';
+        const fullLabel = displayArtist ? `${displayArtist} - ${displayTitle}` : displayTitle;
+        const selected = (String(fullLabel) === String(preselectedProject)) ? ' selected' : '';
+        return `<option value="${escapeHtml(fullLabel)}"${selected}>${escapeHtml(fullLabel)}</option>`;
     }).join('');
 
     return `
@@ -693,14 +702,11 @@ function generateApplyPage(preselectedProject = '') {
             <h1 class="page-title">Заявка на хореографию</h1>
 
             <div class="apply-info">
-                Заполни форму — заявка уйдёт напрямую организаторам.
-                Мы свяжемся с тобой в Telegram.
+                Заполни форму для участия в проекте — заявка уйдёт напрямую менторам.
+                Когда настанет время реализации проекта - мы свяжемся с тобой в Telegram.
             </div>
 
             <form id="applyForm" class="apply-form" onsubmit="submitApplication(event)">
-                <input type="text" name="website" id="applyWebsite"
-                       class="hp-field" tabindex="-1" autocomplete="off">
-
                 <div class="form-group">
                     <label for="applyName">Имя / Ник <span class="required">*</span></label>
                     <input type="text" id="applyName" name="name"
@@ -722,12 +728,11 @@ function generateApplyPage(preselectedProject = '') {
                     </select>
                 </div>
 
-
                 <div class="form-group">
-                    <label for="applyAbout">О себе / ссылки на видео</label>
-                    <textarea id="applyAbout" name="about" rows="4"
-                              placeholder="Пара слов о себе, ссылки на твои видео..."
-                              maxlength="500"></textarea>
+                    <label for="applyVideos">Ссылки на видео <span class="required">*</span></label>
+                    <textarea id="applyVideos" name="videos" rows="4"
+                              placeholder="Вставь ссылки на свои видео с хореографиями (каждая с новой строки)&#10;Например:&#10;https://youtu.be/xxxx&#10;https://youtu.be/yyyy"
+                              required maxlength="1000"></textarea>
                 </div>
 
                 <div class="form-status" id="applyStatus"></div>
@@ -772,78 +777,91 @@ async function submitApplication(event) {
     const statusEl = document.getElementById('applyStatus');
     const submitBtn = document.getElementById('applySubmitBtn');
 
-    // Honeypot — защита от ботов
-    if (form.website && form.website.value.trim() !== '') {
-        statusEl.textContent = 'Заявка отправлена!';
-        statusEl.className = 'form-status success';
-        form.reset();
-        return;
-    }
-
-    // Rate-limit: не чаще 1 заявки в минуту с одного браузера
     const rl = canSubmitApplication();
     if (!rl.ok) {
         statusEl.textContent = `Подожди ${rl.secondsLeft} сек. перед следующей заявкой.`;
-        statusEl.className = 'form-status error';
+        statusEl.className = 'form-status error show';
         return;
     }
 
-    // Собираем данные
     const name = form.name.value.trim();
     const telegram = form.telegram.value.trim();
     const project = form.project.value;
-    const experience = form.experience.value;
-    const about = form.about.value.trim();
+    const videos = form.videos.value.trim();
 
-    // Валидация
-    if (!name || !telegram || !project) {
+    if (!name || !telegram || !project || !videos) {
         statusEl.textContent = 'Заполни обязательные поля.';
-        statusEl.className = 'form-status error';
+        statusEl.className = 'form-status error show';
+
+        if (!name) { form.name.classList.add('shake'); setTimeout(() => form.name.classList.remove('shake'), 600); }
+        if (!telegram) { form.telegram.classList.add('shake'); setTimeout(() => form.telegram.classList.remove('shake'), 600); }
+        if (!project) { form.project.classList.add('shake'); setTimeout(() => form.project.classList.remove('shake'), 600); }
+        if (!videos) { form.videos.classList.add('shake'); setTimeout(() => form.videos.classList.remove('shake'), 600); }
         return;
     }
 
-    if (name.length > 50 || telegram.length > 50 || about.length > 500) {
+    if (name.length > 50 || telegram.length > 50 || videos.length > 1000) {
         statusEl.textContent = 'Слишком длинный текст в одном из полей.';
-        statusEl.className = 'form-status error';
+        statusEl.className = 'form-status error show';
         return;
     }
 
-    // Блокируем кнопку
+    // Кнопка в состояние загрузки
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+    submitBtn.classList.add('loading');
+    submitBtn.innerHTML = `
+        <span class="btn-loader">
+            <span class="loader-dot"></span>
+            <span class="loader-dot"></span>
+            <span class="loader-dot"></span>
+        </span>
+        <span>Отправка</span>
+    `;
+
+    form.classList.add('form-sending');
     statusEl.textContent = '';
     statusEl.className = 'form-status';
 
-    // URL веб-приложения Google Apps Script
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRWcIQpNZ_wPYqwvSEms82FH--Xv8OwH1XTNpwutNzbgR0bwyP0AFfpgsMXcuN-_RYpQ/exec';
 
     try {
-        // mode: 'no-cors' — обходим CORS, потому что Google не отдаёт
-        // Access-Control-Allow-Origin для Apps Script. Ответ прочитать нельзя,
-        // но запрос доходит и Apps Script записывает данные в таблицу.
         await fetch(APPS_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
-            headers: {
-                'Content-Type': 'text/plain;charset=utf-8'
-            },
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify({
                 name: name,
                 telegram: telegram,
                 project: project,
-                about: about,
+                videos: videos,
                 time: new Date().toISOString()
             })
         });
 
-        // Если fetch не выбросил ошибку — считаем, что запрос ушёл.
-        // (При no-cors мы не можем проверить статус, но это нормально.)
-        statusEl.textContent = '✅ Заявка отправлена! Мы свяжемся с тобой в Telegram.';
-        statusEl.className = 'form-status success';
+        submitBtn.innerHTML = `
+            <span class="btn-check"><i class="fas fa-check"></i></span>
+            <span>Готово</span>
+        `;
+        submitBtn.classList.remove('loading');
+        submitBtn.classList.add('success');
+
+        form.classList.remove('form-sending');
+
+        statusEl.innerHTML = `
+            <span class="status-icon"><i class="fas fa-check-circle"></i></span>
+            <span>Заявка отправлена! Мы свяжемся с тобой в Telegram.</span>
+        `;
+        statusEl.className = 'form-status success show';
+
         markApplicationSent();
         form.reset();
 
-        // Через 8 секунд вернёмся в каталог
+        setTimeout(() => {
+            submitBtn.classList.remove('success');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
+        }, 4000);
+
         setTimeout(() => {
             if (document.getElementById('applyForm')) {
                 loadContent('catalog');
@@ -852,12 +870,16 @@ async function submitApplication(event) {
 
     } catch (err) {
         console.error('Apply error:', err);
-        statusEl.textContent = '❌ Не удалось отправить. Попробуй позже или напиши нам в Telegram ' +
-            (typeof CONFIG !== 'undefined' && CONFIG.CONTACT_USERNAME ? CONFIG.CONTACT_USERNAME : '') + '.';
-        statusEl.className = 'form-status error';
-    } finally {
+        form.classList.remove('form-sending');
         submitBtn.disabled = false;
+        submitBtn.classList.remove('loading', 'success');
         submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
+
+        statusEl.innerHTML = `
+            <span class="status-icon"><i class="fas fa-exclamation-circle"></i></span>
+            <span>Не удалось отправить. Попробуй позже или напиши нам в Telegram.</span>
+        `;
+        statusEl.className = 'form-status error show';
     }
 }
 
