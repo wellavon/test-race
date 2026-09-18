@@ -617,11 +617,11 @@ function generateCatalogPage() {
                         <i class="fas fa-arrow-left"></i> Назад
                     </button>
                 </div>
-                <h1 class="page-title">Каталог проектов</h1>
+                <h1 class="page-title">Каталог хореографий</h1>
                 <div class="catalog-empty">
                     <i class="fas fa-folder-open"></i>
                     <p>Каталог пока пуст</p>
-                    <p class="catalog-empty-sub">Следи за обновлениями — проекты появятся здесь</p>
+                    <p class="catalog-empty-sub">Следи за обновлениями — хореографии появятся здесь после публикации</p>
                 </div>
             </div>
         `;
@@ -630,28 +630,26 @@ function generateCatalogPage() {
     const sorted = [...catalogData].sort((a, b) => b.id - a.id);
 
     const cardsHTML = sorted.map(mission => {
-        const displayTitle = mission.title || mission.name || `Миссия ${mission.id}`;
         const displayArtist = mission.artist || '';
-        const fullLabel = displayArtist ? `${displayArtist} - ${displayTitle}` : displayTitle;
-        // Экранируем кавычки для onclick
-        const safeLabel = fullLabel.replace(/'/g, "\\'");
+        const displayTitle = mission.title || mission.name || `Миссия ${mission.id}`;
+        const fullName = displayArtist ? `${displayArtist} - ${displayTitle}` : displayTitle;
+        const safeName = fullName.replace(/'/g, "\\'");
 
         return `
             <div class="catalog-card">
                 <div class="catalog-img">
-                    <img src="${mission.image}.jpeg" alt="${fullLabel}"
+                    <img src="${mission.image}.jpeg" alt="${fullName}"
                          onerror="this.src='${mission.image}.png'; this.onerror=function(){this.style.display='none'; this.parentElement.innerHTML='<span style=\\'color:#666;font-size:3rem\\'>📷</span>'}">
                     <div class="catalog-badge">ID ${mission.id}</div>
                 </div>
                 <div class="catalog-body">
-                    ${displayArtist ? `<div class="catalog-artist">${displayArtist}</div>` : ''}
-                    <h3 class="catalog-title">${displayTitle}</h3>
+                    <h3 class="catalog-title">${fullName}</h3>
                     <div class="catalog-actions">
                         <a href="${mission.link}" target="_blank" rel="noopener noreferrer" class="catalog-btn catalog-btn-watch">
                             <i class="fas fa-play"></i> Смотреть
                         </a>
                         <button class="catalog-btn catalog-btn-apply"
-                                onclick="loadContent('apply', { project: '${safeLabel}' })">
+                                onclick="loadContent('apply', { project: '${safeName}' })">
                             <i class="fas fa-paper-plane"></i> Откликнуться
                         </button>
                     </div>
@@ -667,9 +665,9 @@ function generateCatalogPage() {
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
             </div>
-            <h1 class="page-title">Каталог проектов</h1>
+            <h1 class="page-title">Каталог хореографий</h1>
             <div class="catalog-info">
-                Выбери проект и нажми «Откликнуться» — форма заявки откроется
+                Выбери хореографию и нажми «Откликнуться» — форма заявки откроется
                 с уже выбранным проектом.
             </div>
             <div class="catalog-grid">
@@ -685,11 +683,11 @@ function generateApplyPage(preselectedProject = '') {
     const allProjects = [...catalogData].sort((a, b) => b.id - a.id);
 
     const projectsOptions = allProjects.map(p => {
-        const displayTitle = p.title || p.name || `Миссия ${p.id}`;
         const displayArtist = p.artist || '';
-        const fullLabel = displayArtist ? `${displayArtist} - ${displayTitle}` : displayTitle;
-        const selected = (String(fullLabel) === String(preselectedProject)) ? ' selected' : '';
-        return `<option value="${escapeHtml(fullLabel)}"${selected}>${escapeHtml(fullLabel)}</option>`;
+        const displayTitle = p.title || p.name || `Миссия ${p.id}`;
+        const fullName = displayArtist ? `${displayArtist} - ${displayTitle}` : displayTitle;
+        const selected = (String(fullName) === String(preselectedProject)) ? ' selected' : '';
+        return `<option value="${escapeHtml(fullName)}"${selected}>${escapeHtml(fullName)}</option>`;
     }).join('');
 
     return `
@@ -699,11 +697,11 @@ function generateApplyPage(preselectedProject = '') {
                     <i class="fas fa-arrow-left"></i> К каталогу
                 </button>
             </div>
-            <h1 class="page-title">Заявка на участие в проекте</h1>
+            <h1 class="page-title">Заявка на хореографию</h1>
 
             <div class="apply-info">
-                Заполни форму для участия в проекте — заявка уйдёт напрямую менторам.
-                Когда настанет время реализации проекта - мы свяжемся с тобой в Telegram.
+                Заполни форму — заявка уйдёт напрямую организаторам.
+                Мы свяжемся с тобой в Telegram.
             </div>
 
             <form id="applyForm" class="apply-form" onsubmit="submitApplication(event)">
@@ -720,10 +718,11 @@ function generateApplyPage(preselectedProject = '') {
                 </div>
 
                 <div class="form-group">
-                    <label for="applyProject">На какой проект откликаешься? <span class="required">*</span></label>
+                    <label for="applyProject">На какую хореографию откликаешься? <span class="required">*</span></label>
                     <select id="applyProject" name="project" required>
                         <option value="">— Выбери проект —</option>
                         ${projectsOptions}
+                        <option value="Другое">Другое (напишу в комментарии)</option>
                     </select>
                 </div>
 
@@ -805,7 +804,6 @@ async function submitApplication(event) {
         return;
     }
 
-    // Кнопка в состояние загрузки
     submitBtn.disabled = true;
     submitBtn.classList.add('loading');
     submitBtn.innerHTML = `
