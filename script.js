@@ -781,6 +781,7 @@ async function submitApplication(event) {
     const statusEl = document.getElementById('applyStatus');
     const submitBtn = document.getElementById('applySubmitBtn');
 
+    // Honeypot — защита от ботов
     if (form.website && form.website.value.trim() !== '') {
         statusEl.textContent = 'Заявка отправлена!';
         statusEl.className = 'form-status success';
@@ -788,6 +789,7 @@ async function submitApplication(event) {
         return;
     }
 
+    // Rate-limit: не чаще 1 заявки в минуту с одного браузера
     const rl = canSubmitApplication();
     if (!rl.ok) {
         statusEl.textContent = `Подожди ${rl.secondsLeft} сек. перед следующей заявкой.`;
@@ -795,12 +797,14 @@ async function submitApplication(event) {
         return;
     }
 
+    // Собираем данные
     const name = form.name.value.trim();
     const telegram = form.telegram.value.trim();
     const project = form.project.value;
     const experience = form.experience.value;
     const about = form.about.value.trim();
 
+    // Валидация
     if (!name || !telegram || !project) {
         statusEl.textContent = 'Заполни обязательные поля.';
         statusEl.className = 'form-status error';
@@ -813,52 +817,43 @@ async function submitApplication(event) {
         return;
     }
 
+    // Блокируем кнопку
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
     statusEl.textContent = '';
     statusEl.className = 'form-status';
 
-    const time = new Date().toLocaleString('ru-RU', {
-        day: '2-digit', month: '2-digit', year: 'numeric',
-        hour: '2-digit', minute: '2-digit'
-    });
-
-    const text = [
-        '🏁 <b>НОВАЯ ЗАЯВКА RC:RC</b>',
-        '',
-        `👤 <b>Имя:</b> ${escapeHtml(name)}`,
-        `✈️ <b>Telegram:</b> ${escapeHtml(telegram)}`,
-        `🎬 <b>Проект:</b> ${escapeHtml(project)}`,
-        `⭐ <b>Опыт:</b> ${escapeHtml(experience)}`,
-        about ? `📝 <b>О себе:</b>\n${escapeHtml(about)}` : '',
-        '',
-        `🕒 ${time}`
-    ].filter(Boolean).join('\n');
+    // URL веб-приложения Google Apps Script
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRWcIQpNZ_wPYqwvSEms82FH--Xv8OwH1XTNpwutNzbgR0bwyP0AFfpgsMXcuN-_RYpQ/exec';
 
     try {
-        const url = `https://api.telegram.org/bot${CONFIG.APPLY_BOT_TOKEN}/sendMessage`;
-        const resp = await fetch(url, {
+        // mode: 'no-cors' — обходим CORS, потому что Google не отдаёт
+        // Access-Control-Allow-Origin для Apps Script. Ответ прочитать нельзя,
+        // но запрос доходит и Apps Script записывает данные в таблицу.
+        await fetch(APPS_SCRIPT_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8'
+            },
             body: JSON.stringify({
-                chat_id: CONFIG.APPLY_CHAT_ID,
-                text: text,
-                parse_mode: 'HTML',
-                disable_web_page_preview: true
+                name: name,
+                telegram: telegram,
+                project: project,
+                experience: experience,
+                about: about,
+                time: new Date().toISOString()
             })
         });
 
-        const data = await resp.json();
-
-        if (!resp.ok || !data.ok) {
-            throw new Error(data.description || 'Ошибка Telegram API');
-        }
-
+        // Если fetch не выбросил ошибку — считаем, что запрос ушёл.
+        // (При no-cors мы не можем проверить статус, но это нормально.)
         statusEl.textContent = '✅ Заявка отправлена! Мы свяжемся с тобой в Telegram.';
         statusEl.className = 'form-status success';
         markApplicationSent();
         form.reset();
 
+        // Через 8 секунд вернёмся в каталог
         setTimeout(() => {
             if (document.getElementById('applyForm')) {
                 loadContent('catalog');
@@ -868,7 +863,7 @@ async function submitApplication(event) {
     } catch (err) {
         console.error('Apply error:', err);
         statusEl.textContent = '❌ Не удалось отправить. Попробуй позже или напиши нам в Telegram ' +
-            CONFIG.CONTACT_USERNAME + '.';
+            (typeof CONFIG !== 'undefined' && CONFIG.CONTACT_USERNAME ? CONFIG.CONTACT_USERNAME : '') + '.';
         statusEl.className = 'form-status error';
     } finally {
         submitBtn.disabled = false;
