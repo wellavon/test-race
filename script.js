@@ -700,8 +700,8 @@ function generateApplyPage(preselectedProject = '') {
             <h1 class="page-title">Заявка на участие в проекте</h1>
 
             <div class="apply-info">
-                Заполни форму — заявка уйдёт напрямую организаторам.
-                Мы свяжемся с тобой в Telegram.
+                Заполни форму — заявка уйдёт напрямую менторам.
+                Когда придет время реализации проекта - мы свяжемся с тобой в Telegram.
             </div>
 
             <form id="applyForm" class="apply-form" onsubmit="submitApplication(event)">
