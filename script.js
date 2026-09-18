@@ -44,40 +44,85 @@ function updateRacerScores() {
     });
 }
 
-// === ЗАГРУЗКА МИССИЙ ИЗ missions.json ===
+// ============================================================
+// ПОРТФОЛИО: миссии, которые ты заводишь вручную (НЕ ТРОГАЕМ)
+// Они показываются на странице «О системе» → «Портфолио рэйсеров»
+// ============================================================
 
-let missionData = [];
-let missionsLoaded = false;
-let missionsLoadPromise = null;
+const missionData = [
+    { id: 32, name: "Миссия 32", link: "https://youtu.be/x7qO3zcMh2Y", image: "lobby" },
+    { id: 31, name: "Миссия 31", link: "https://youtu.be/WVO--liuNb0", image: "acai" },
+    { id: 30, name: "Миссия 30", link: "https://youtu.be/lThYVe_TIag", image: "wet" },
+    { id: 29, name: "Миссия 29", link: "https://youtu.be/-BQ-FOM4jFE", image: "chat" },
+    { id: 28, name: "Миссия 28", link: "https://youtu.be/uEwhlGxXHOU", image: "bad2" },
+    { id: 27, name: "Миссия 27", link: "https://youtu.be/tYnYY4FtVDs", image: "rush" },
+    { id: 26, name: "Миссия 26", link: "https://youtu.be/Cc39vf6tpfY", image: "bad_ateez" },
+    { id: 25, name: "Миссия 25", link: "https://youtu.be/k_9apuCaMVw", image: "hitem" },
+    { id: 24, name: "Миссия 24", link: "https://youtu.be/pCDSQeh3Wbs", image: "okay" },
+    { id: 23, name: "Миссия 23", link: "https://youtu.be/xeHsGngi98Y?si=SH2XSQdZnaJdJ19E", image: "adf" },
+    { id: 22, name: "Миссия 22", link: "https://youtu.be/jjtmxb_5wmg", image: "boompala" },
+    { id: 21, name: "Миссия 21", link: "https://youtu.be/SP97yMwEnBc", image: "bad" },
+    { id: 20, name: "Миссия 20", link: "https://youtu.be/DXMT24Xst8c?si=88ElTD-ypwF4hCWk", image: "redred" },
+    { id: 19, name: "Миссия 19", link: "https://youtu.be/ioF31qa4miw", image: "drift" },
+    { id: 18, name: "Миссия 18", link: "https://youtu.be/Hhrery2tIGQ?si=SxE6N9N3lJChQWb3", image: "pinky_up" },
+    { id: 17, name: "Миссия 17", link: "https://youtu.be/ci8WH8tiQhg?si=78S7M2mxW3n31KIc", image: "r2r" },
+    { id: 16, name: "Миссия 16", link: "https://youtu.be/h9pVcf1CuAI", image: "one_bite" },
+    { id: 15, name: "Миссия 15", link: "https://youtu.be/iYpHd_194cM", image: "adrenaline" },
+    { id: 14, name: "Миссия 14", link: "https://youtu.be/ljl2hqR2YXM?si=koUeMEHWN5_Zqq4S", image: "saucin" },
+    { id: 13, name: "Миссия 13", link: "https://youtu.be/B9z7TTMgKfI", image: "party" },
+    { id: 12, name: "Миссия 12", link: "https://youtu.be/NAh2QCLjmK4", image: "do_it" },
+    { id: 11, name: "Миссия 11", link: "https://youtu.be/LczT3pJCzO0", image: "tunnel" },
+    { id: 10, name: "Миссия 10", link: "https://youtu.be/I2ho_pNATI4?si=R3fa_A-2CWasiftk", image: "superpower" },
+    { id: 9, name: "Миссия 9", link: "https://youtu.be/bFcbi4upihU", image: "dwiw" },
+    { id: 8, name: "Миссия 8", link: "https://youtu.be/iyH_gSL0ZmY", image: "shaboom" },
+    { id: 7, name: "Миссия 7", link: "https://youtu.be/MoJ37LUAKuQ", image: "gotcha" },
+    { id: 6, name: "Миссия 6", link: "https://youtu.be/yupP4AlwH24", image: "ceremony" },
+    { id: 5, name: "Миссия 5", link: "https://youtu.be/THk-GkZjFu8", image: "wicked_love" },
+    { id: 4, name: "Миссия 4", link: "https://youtu.be/JGf2F87fSI0", image: "1_only" },
+    { id: 3, name: "Миссия 3", link: "https://youtu.be/NTPZLUXcZp4", image: "iyf" },
+    { id: 2, name: "Миссия 2", link: "https://youtu.be/cbtjGX4vRV", image: "pretty_boy" },
+    { id: 1, name: "Миссия 1", link: "https://youtu.be/E9h64fDEa6s?si=M7hAkz1SLBH0o3S2", image: "mantra" }
+];
 
-async function loadMissions(forceReload = false) {
-    if (missionsLoaded && !forceReload) {
-        return missionData;
+// ============================================================
+// КАТАЛОГ: миссии, которые добавляются ТОЛЬКО через ТГ-бота
+// Хранятся в missions.json в репозитории
+// ============================================================
+
+let catalogData = [];
+let catalogLoaded = false;
+let catalogLoadPromise = null;
+
+async function loadCatalog(forceReload = false) {
+    if (catalogLoaded && !forceReload) {
+        return catalogData;
     }
-    if (missionsLoadPromise && !forceReload) {
-        return missionsLoadPromise;
+    if (catalogLoadPromise && !forceReload) {
+        return catalogLoadPromise;
     }
 
-    missionsLoadPromise = (async () => {
+    catalogLoadPromise = (async () => {
         try {
             const resp = await fetch('missions.json?t=' + Date.now(), { cache: 'no-store' });
             if (!resp.ok) throw new Error('HTTP ' + resp.status);
             const data = await resp.json();
-            missionData = Array.isArray(data.missions) ? data.missions : [];
-            missionsLoaded = true;
-            return missionData;
+            catalogData = Array.isArray(data.missions) ? data.missions : [];
+            catalogLoaded = true;
+            return catalogData;
         } catch (e) {
             console.error('Не удалось загрузить missions.json:', e);
-            missionData = [];
-            missionsLoaded = true;
-            return missionData;
+            catalogData = [];
+            catalogLoaded = true;
+            return catalogData;
         }
     })();
 
-    return missionsLoadPromise;
+    return catalogLoadPromise;
 }
 
-// === ДАННЫЕ РЭЙСЕРОВ ===
+// ============================================================
+// ДАННЫЕ РЭЙСЕРОВ
+// ============================================================
 
 const racersData = [
     {
@@ -266,6 +311,7 @@ async function loadContent(page, params = {}) {
             break;
 
         case 'about':
+            // Портфолио рэйсеров — из missionData, ничего не грузим
             contentDiv.innerHTML = generateAboutPage();
             break;
 
@@ -275,18 +321,14 @@ async function loadContent(page, params = {}) {
 
         case 'catalog':
             contentDiv.innerHTML = generateLoading();
-            await loadMissions();
+            await loadCatalog();
             contentDiv.innerHTML = generateCatalogPage();
             break;
 
         case 'apply':
             contentDiv.innerHTML = generateLoading();
-            await loadMissions();
+            await loadCatalog();
             contentDiv.innerHTML = generateApplyPage(params.project || '');
-            break;
-
-        case 'upload':
-            contentDiv.innerHTML = generateUploadPage();
             break;
 
         default:
@@ -338,18 +380,28 @@ function generateHomePage() {
                     <i class="fas fa-lightbulb"></i>
                 </a>
             </div>
-            <div style="margin-top:30px;font-size:0.75rem;opacity:0.35;text-align:center">
-                <a href="#" onclick="loadContent('upload');return false;" style="color:#666;text-decoration:none;letter-spacing:2px">
-                    ⚙ upload
-                </a>
-            </div>
         </div>
     `;
 }
 
-// === О СИСТЕМЕ ===
+// === О СИСТЕМЕ (с портфолио!) ===
 
 function generateAboutPage() {
+    let missionsHTML = '';
+
+    missionData.forEach(mission => {
+        missionsHTML += `
+            <div class="mission-card">
+                <div class="mission-img">
+                    <img src="${mission.image}.jpeg" alt="${mission.name}" onerror="this.src='${mission.image}.png'; this.onerror=function(){this.style.display='none'; this.parentElement.innerHTML='<span style=\\'color:#666;font-size:3rem\\'>📷</span>'}">
+                </div>
+                <a href="${mission.link}" target="_blank" class="mission-link">
+                    Посмотреть запись миссии
+                </a>
+            </div>
+        `;
+    });
+
     return `
         <div class="about-page">
             <div class="back-btn-container">
@@ -367,6 +419,10 @@ function generateAboutPage() {
                     <li>Основная задача — синхронизация с выбранной реальностью и успешное прохождение испытания, результаты которого автоматически монтируются в видеоотчет и публикуются в разделе "портфолио".</li>
                     <li>Активность пользователя влияет на его ранг.</li>
                 </ul>
+            </div>
+            <h2 class="page-title" style="margin-top: 40px; margin-bottom: 25px;">Портфолио рэйсеров</h2>
+            <div class="missions-grid">
+                ${missionsHTML}
             </div>
         </div>
     `;
@@ -553,10 +609,10 @@ function closeRacerAchievements(event) {
     }
 }
 
-// === КАТАЛОГ ХОРЕОГРАФИЙ ===
+// === КАТАЛОГ ХОРЕОГРАФИЙ (только из missions.json) ===
 
 function generateCatalogPage() {
-    if (!missionData || missionData.length === 0) {
+    if (!catalogData || catalogData.length === 0) {
         return `
             <div class="catalog-page">
                 <div class="back-btn-container">
@@ -574,7 +630,7 @@ function generateCatalogPage() {
         `;
     }
 
-    const sorted = [...missionData].sort((a, b) => b.id - a.id);
+    const sorted = [...catalogData].sort((a, b) => b.id - a.id);
 
     const cardsHTML = sorted.map(mission => `
         <div class="catalog-card">
@@ -620,7 +676,7 @@ function generateCatalogPage() {
 // === СТРАНИЦА ЗАЯВКИ ===
 
 function generateApplyPage(preselectedProject = '') {
-    const allProjects = [...missionData].sort((a, b) => b.id - a.id);
+    const allProjects = [...catalogData].sort((a, b) => b.id - a.id);
 
     const projectsOptions = allProjects.map(p => {
         const selected = (String(p.name) === String(preselectedProject)) ? ' selected' : '';
@@ -817,102 +873,6 @@ async function submitApplication(event) {
     } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
-    }
-}
-
-// === СТРАНИЦА UPLOAD (для организаторов) ===
-
-function generateUploadPage() {
-    return `
-        <div class="upload-page">
-            <div class="back-btn-container">
-                <button class="back-btn" onclick="loadContent('home')">
-                    <i class="fas fa-arrow-left"></i> Назад
-                </button>
-            </div>
-            <h1 class="page-title">Добавить миссию</h1>
-
-            <div class="apply-info">
-                Заполни данные — миссия автоматически закоммитится в GitHub
-                через Cloudflare Worker. Через минуту появится в каталоге.
-            </div>
-
-            <form class="apply-form" onsubmit="submitMission(event)">
-                <div class="form-group">
-                    <label for="missionId">ID миссии <span class="required">*</span></label>
-                    <input type="number" id="missionId" required min="1" placeholder="33">
-                </div>
-
-                <div class="form-group">
-                    <label for="missionImage">Кодовое имя картинки <span class="required">*</span></label>
-                    <input type="text" id="missionImage" required
-                           placeholder="lobby" maxlength="40"
-                           pattern="[a-z0-9_]+"
-                           title="Только латиница в нижнем регистре, цифры и подчёркивания">
-                </div>
-
-                <div class="form-group">
-                    <label for="missionLink">Ссылка на YouTube <span class="required">*</span></label>
-                    <input type="url" id="missionLink" required
-                           placeholder="https://youtu.be/xxxxxxxxxxx">
-                </div>
-
-                <div class="form-status" id="missionStatus"></div>
-
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-paper-plane"></i> Отправить в GitHub
-                </button>
-            </form>
-        </div>
-    `;
-}
-
-async function submitMission(event) {
-    event.preventDefault();
-    const statusEl = document.getElementById('missionStatus');
-
-    const id = parseInt(document.getElementById('missionId').value, 10);
-    const image = document.getElementById('missionImage').value.trim();
-    const link = document.getElementById('missionLink').value.trim();
-
-    if (!id || !image || !link) {
-        statusEl.textContent = 'Заполни все поля.';
-        statusEl.className = 'form-status error';
-        return;
-    }
-
-    statusEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка в GitHub...';
-    statusEl.className = 'form-status';
-
-    try {
-        const resp = await fetch(CONFIG.GITHUB_PROXY_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                mission: { id: id, link: link, image: image }
-            })
-        });
-
-        const data = await resp.json();
-
-        if (data.ok) {
-            statusEl.innerHTML = `
-                ✅ <b>Миссия ${id} добавлена в GitHub!</b><br>
-                <a href="${data.commit}" target="_blank" style="color:#0f0">Посмотреть коммит</a><br>
-                <span style="font-size:0.85rem;opacity:0.7">Подожди ~1 минуту, пока GitHub Pages обновится</span>
-            `;
-            statusEl.className = 'form-status success';
-
-            // Сбрасываем кеш миссий, чтобы при следующем заходе подтянулись новые
-            missionsLoaded = false;
-            missionsLoadPromise = null;
-        } else {
-            throw new Error(data.error || 'Ошибка');
-        }
-    } catch (e) {
-        console.error('Mission submit error:', e);
-        statusEl.textContent = '❌ Ошибка: ' + e.message;
-        statusEl.className = 'form-status error';
     }
 }
 
