@@ -511,7 +511,7 @@ body {
     position: relative;
     transition: all 0.3s ease;
     transform: perspective(500px) rotateY(3deg) rotateX(0deg) rotateZ(-1deg);
-    min-height: 270px;
+    min-height: 290px;
     overflow: hidden;
 }
 
@@ -539,15 +539,15 @@ body {
     position: absolute;
     top: 15px;
     left: 15px;
-    width: 120px;
-    height: 32px;
+    width: 130px;
+    height: 34px;
     border: 2px solid #fff;
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     font-weight: 700;
     color: #0f0;
     background-color: #000;
@@ -560,7 +560,7 @@ body {
     position: absolute;
     top: 60px;
     left: 15px;
-    width: 120px;
+    width: 140px;
     aspect-ratio: 3 / 4;
     background-color: #111;
     border-radius: 8px;
@@ -601,7 +601,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    width: 170px;
+    width: 160px;
 }
 
 .info-item {
@@ -1462,7 +1462,7 @@ body {
 
     .id-card {
         height: auto;
-        min-height: 250px;
+        min-height: 270px;
         transform: none !important;
         padding: 15px;
     }
@@ -1533,7 +1533,7 @@ body {
 
     .back-btn { padding: 8px 15px; font-size: 0.85rem; }
 
-    /* КАРТОЧКИ РЭЙСЕРОВ: фото 3:4, компактные */
+    /* КАРТОЧКИ РЭЙСЕРОВ — фото 3:4, увеличено */
     .racers-container {
         grid-template-columns: 1fr;
         gap: 15px;
@@ -1541,7 +1541,7 @@ body {
 
     .id-card {
         height: auto;
-        min-height: 240px;
+        min-height: 260px;
         padding: 12px;
         transform: none !important;
     }
@@ -1551,7 +1551,7 @@ body {
     }
 
     .card-logo {
-        width: 100px;
+        width: 110px;
         height: 22px;
         font-size: 0.55rem;
         top: 15px;
@@ -1559,7 +1559,7 @@ body {
     }
 
     .racer-photo-container {
-        width: 100px;
+        width: 115px;
         aspect-ratio: 3 / 4;
         top: 48px;
         left: 8px;
@@ -1570,10 +1570,10 @@ body {
         position: relative;
         top: auto;
         right: auto;
-        width: calc(100% - 120px);
+        width: calc(100% - 130px);
         gap: 6px;
         margin-top: 4px;
-        margin-left: 120px;
+        margin-left: 130px;
     }
 
     .info-item {
