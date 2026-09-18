@@ -39,7 +39,7 @@ body {
 }
 
 /* ============================================================
-   ФОН: МАТРИЦА, СЛЕДЫ, СЕТКА
+   ФОН
    ============================================================ */
 
 .matrix-bg {
@@ -234,10 +234,21 @@ body {
 }
 
 .about-page,
-.ranking-page {
+.ranking-page,
+.catalog-page,
+.apply-page {
     text-align: center;
     position: relative;
+}
+
+.about-page,
+.ranking-page {
     padding-top: 80px;
+}
+
+.catalog-page,
+.apply-page {
+    padding-top: 20px;
 }
 
 .page-title {
@@ -248,6 +259,8 @@ body {
     text-transform: uppercase;
     letter-spacing: 3px;
     text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    text-align: center;
+    width: 100%;
 }
 
 /* ============================================================
@@ -321,7 +334,6 @@ body {
     left: 100%;
 }
 
-/* Соцсети на главной */
 .social-buttons-container {
     display: flex;
     justify-content: center;
@@ -479,7 +491,7 @@ body {
 }
 
 /* ============================================================
-   РЭЙСЕРЫ (ID-КАРТОЧКИ)
+   РЭЙСЕРЫ
    ============================================================ */
 
 .racers-container {
@@ -572,11 +584,11 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     border-radius: 6px;
 }
 
-.racer-photo img.zoomed,
-.achievements-photo img.zoomed {
+.racer-photo img.zoomed {
     object-position: center 70%;
     transform: scale(1.1);
 }
@@ -746,6 +758,12 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
+}
+
+.achievements-photo img.zoomed {
+    object-position: center 70%;
+    transform: scale(1.2);
 }
 
 .achievements-info {
@@ -861,11 +879,14 @@ body {
 }
 
 /* ============================================================
-   КАТАЛОГ
+   КАТАЛОГ ПРОЕКТОВ
    ============================================================ */
 
 .catalog-page {
     padding-top: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .catalog-info {
@@ -914,7 +935,7 @@ body {
 
 .catalog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 25px;
     margin-top: 30px;
 }
@@ -938,7 +959,7 @@ body {
 .catalog-img {
     position: relative;
     width: 100%;
-    height: 180px;
+    aspect-ratio: 16 / 9;
     background-color: #111;
     overflow: hidden;
     display: flex;
@@ -965,45 +986,53 @@ body {
     background-color: rgba(0, 0, 0, 0.85);
     color: #0f0;
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 1px;
-    padding: 5px 10px;
+    padding: 4px 9px;
     border: 1px solid #0f0;
     border-radius: 4px;
     text-shadow: 0 0 6px rgba(0, 255, 0, 0.6);
+    z-index: 2;
 }
 
 .catalog-body {
-    padding: 18px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     flex: 1;
 }
 
 .catalog-title {
     font-family: 'ZenDotsKir', sans-serif;
-    font-size: 1.15rem;
+    font-size: 1rem;
     color: #fff;
     text-align: center;
     letter-spacing: 1px;
     text-transform: uppercase;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+    line-height: 1.3;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 2.6em;
 }
 
 .catalog-actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     margin-top: auto;
 }
 
 .catalog-btn {
     flex: 1;
     font-family: 'ZenDotsKir', sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    padding: 10px 8px;
+    padding: 9px 6px;
     border-radius: 6px;
     cursor: pointer;
     text-transform: uppercase;
@@ -1012,7 +1041,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 5px;
     transition: all 0.3s ease;
     border: 2px solid transparent;
     text-align: center;
@@ -1055,6 +1084,7 @@ body {
     padding-top: 20px;
     max-width: 640px;
     margin: 0 auto;
+    text-align: center;
 }
 
 .apply-info {
@@ -1096,6 +1126,7 @@ body {
     border-radius: 16px;
     box-shadow: 0 0 30px rgba(0, 255, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.03);
     transition: all 0.4s ease;
+    text-align: left;
 }
 
 .apply-form::before {
@@ -1130,6 +1161,7 @@ body {
     letter-spacing: 2px;
     padding-left: 4px;
     text-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+    text-align: left;
 }
 
 .form-group label .required {
@@ -1429,9 +1461,9 @@ body {
     .menu-btn { width: 100%; max-width: 300px; }
 
     .catalog-grid { grid-template-columns: 1fr; gap: 18px; }
-    .catalog-img { height: 160px; }
-    .catalog-title { font-size: 1.05rem; }
-    .catalog-btn { font-size: 0.8rem; padding: 9px 6px; letter-spacing: 0.5px; }
+    .catalog-img { aspect-ratio: 16 / 9; }
+    .catalog-title { font-size: 0.95rem; }
+    .catalog-btn { font-size: 0.75rem; padding: 9px 6px; }
 
     .apply-page { padding-top: 10px; }
     .apply-info { font-size: 0.85rem; padding: 14px 16px; margin-bottom: 25px; }
@@ -1444,6 +1476,13 @@ body {
     .submit-btn { font-size: 0.9rem; padding: 14px 24px; letter-spacing: 1.5px; }
     .form-status { font-size: 0.85rem; }
     .form-status.show { padding: 12px 15px; }
+
+    .achievements-modal-content { padding: 20px; max-height: 90vh; max-width: 95%; }
+    .achievements-header { flex-direction: row; align-items: flex-start; text-align: left; gap: 15px; }
+    .achievements-name { font-size: 1.4rem; }
+    .achievements-photo { width: 140px; height: 180px; font-size: 2rem; }
+    .achievement-list { grid-template-columns: 1fr; }
+    .section-title { font-size: 1.1rem; }
 }
 
 @media (max-width: 480px) {
@@ -1475,7 +1514,7 @@ body {
     .mission-img { height: 100px; }
     .mission-link { padding: 10px; font-size: 0.8rem; }
 
-    .page-title { font-size: 1.4rem; margin-bottom: 15px; }
+    .page-title { font-size: 1.4rem; margin-bottom: 15px; letter-spacing: 2px; }
     .system-info { font-size: 0.9rem; padding: 12px; margin-bottom: 20px; }
 
     .back-btn { padding: 8px 15px; font-size: 0.85rem; }
