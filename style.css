@@ -154,19 +154,6 @@ body {
     box-shadow: 0 0 25px #0f0;
 }
 
-.logo-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2.8rem;
-    font-weight: 900;
-    letter-spacing: 5px;
-    color: #fff;
-    text-shadow: 0 0 10px #fff;
-}
-
 .logo-img-text {
     position: absolute;
     top: 50%;
@@ -206,7 +193,7 @@ body {
 }
 
 .back-btn {
-    padding: 12px 10px;
+    padding: 12px 20px;
     font-family: 'ZenDotsKir', sans-serif;
     font-size: 1rem;
     font-weight: 600;
@@ -246,13 +233,26 @@ body {
     overflow: hidden;
 }
 
+/* Все страницы — с центрированием по умолчанию */
 .about-page,
-.ranking-page {
+.ranking-page,
+.catalog-page,
+.apply-page {
     text-align: center;
     position: relative;
+}
+
+.about-page,
+.ranking-page {
     padding-top: 80px;
 }
 
+.catalog-page,
+.apply-page {
+    padding-top: 20px;
+}
+
+/* Заголовки — ВСЕГДА по центру */
 .page-title {
     font-family: 'ZenDotsKir', sans-serif;
     font-size: 2.2rem;
@@ -261,6 +261,9 @@ body {
     text-transform: uppercase;
     letter-spacing: 3px;
     text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    text-align: center;
+    width: 100%;
+    display: block;
 }
 
 /* ============================================================
@@ -334,7 +337,6 @@ body {
     left: 100%;
 }
 
-/* Social buttons */
 .social-buttons-container {
     display: flex;
     justify-content: center;
@@ -406,8 +408,7 @@ body {
 }
 
 .system-list li {
-    padding: 12px 0;
-    padding-left: 30px;
+    padding: 12px 0 12px 30px;
     position: relative;
     line-height: 1.5;
 }
@@ -448,7 +449,6 @@ body {
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    transform: perspective(500px) rotateY(0deg);
 }
 
 .mission-card:hover {
@@ -494,21 +494,8 @@ body {
 }
 
 /* ============================================================
-   РЭЙСЕРЫ
+   РЭЙСЕРЫ (увеличены по высоте)
    ============================================================ */
-
-.ranking-info {
-    font-size: 1.3rem;
-    line-height: 1.6;
-    margin-bottom: 50px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 8px;
-}
 
 .racers-container {
     display: grid;
@@ -518,7 +505,6 @@ body {
     margin-bottom: 50px;
 }
 
-/* Обновленные кривые ID карточки */
 .id-card {
     background-color: rgba(20, 20, 20, 0.95);
     border-radius: 15px;
@@ -527,22 +513,18 @@ body {
     position: relative;
     transition: all 0.3s ease;
     transform: perspective(500px) rotateY(3deg) rotateX(0deg) rotateZ(-1deg);
-    /* Кривизна */
-    height: 280px;
-    /* Укороченная длина */
+    height: 330px; /* было 280, стало 330 */
     overflow: hidden;
 }
 
 .id-card:nth-child(even) {
     transform: perspective(500px) rotateY(-3deg) rotateX(0deg) rotateZ(1deg);
-    /* Чередующаяся кривизна */
 }
 
 .id-card:hover {
     border-color: rgba(0, 255, 0, 0.5);
     box-shadow: 0 0 25px rgba(0, 255, 0, 0.3);
     transform: perspective(500px) rotateY(0deg) rotateX(0deg) rotateZ(0deg) translateY(-10px);
-    /* Выравнивание при наведении */
 }
 
 .id-card::before {
@@ -555,7 +537,6 @@ body {
     background: linear-gradient(to right, #0f0, #000);
 }
 
-/* Логотип в левом верхнем углу */
 .card-logo {
     position: absolute;
     top: 15px;
@@ -577,14 +558,12 @@ body {
     letter-spacing: 2px;
 }
 
-/* Фото рэйсера под логотипом */
 .racer-photo-container {
     position: absolute;
     top: 65px;
-    /* Под логотипом */
     left: 15px;
     width: 130px;
-    height: 165px;
+    height: 215px; /* было 165, стало 215 */
     background-color: #111;
     border-radius: 8px;
     display: flex;
@@ -608,10 +587,15 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     border-radius: 6px;
 }
 
-/* Информация о рэйсере в один столбик справа */
+.racer-photo img.zoomed {
+    object-position: center 70%;
+    transform: scale(1.1);
+}
+
 .racer-info {
     position: absolute;
     top: 20px;
@@ -648,7 +632,6 @@ body {
     text-shadow: 0 0 5px #0f0;
 }
 
-/* Подпись рэйсера в правом нижнем углу */
 .racer-signature {
     position: absolute;
     bottom: 15px;
@@ -665,19 +648,6 @@ body {
     line-height: 0.9;
 }
 
-/* Декоративные элементы на карточках */
-.id-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 30px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-    z-index: 1;
-}
-
-/* Неоновые полосы на карточках */
 .neon-stripe {
     position: absolute;
     bottom: 10px;
@@ -759,125 +729,6 @@ body {
     transform: rotate(90deg);
 }
 
-.modal-title {
-    font-family: 'ZenDotsKir', sans-serif;
-    font-size: 1.8rem;
-    color: #0f0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-    text-align: center;
-}
-
-.modal-subtitle {
-    font-family: 'ZenDotsKir', sans-serif;
-    font-size: 1.4rem;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    text-align: center;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-
-.modal-text {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #fff;
-    margin-bottom: 25px;
-    text-align: center;
-}
-
-.modal-text p {
-    margin-bottom: 15px;
-}
-
-.points-list {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-    display: inline-block;
-    margin: 0 auto;
-}
-
-.points-list li {
-    padding: 8px 0;
-    padding-left: 25px;
-    position: relative;
-}
-
-.points-list li::before {
-    content: '▸';
-    position: absolute;
-    left: 0;
-    color: #0f0;
-    font-size: 1.2rem;
-}
-
-.points-list strong {
-    color: #0f0;
-    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
-}
-
-/* Таблица рангов */
-.ranks-table {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.modal-note {
-    font-size: 0.95rem;
-    color: #ff6b6b;
-    text-align: center;
-    font-style: italic;
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: rgba(255, 107, 107, 0.1);
-    border-radius: 5px;
-    border: 1px solid rgba(255, 107, 107, 0.3);
-}
-
-.rank-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-    gap: 5px;
-}
-
-.rank-row:last-child {
-    border-bottom: none;
-}
-
-.rank-name {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #0f0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.rank-roman {
-    font-family: 'ZenDotsKir', sans-serif;
-    font-size: 1rem;
-    color: #888;
-    font-style: italic;
-}
-
-.rank-translation {
-    font-family: 'ZenDotsKir', sans-serif;
-    font-size: 1rem;
-    color: #fff;
-}
-
-/* Модальное окно достижений рэйсера */
 .achievements-modal-content {
     max-width: 700px;
     max-height: 85vh;
@@ -910,16 +761,12 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 .achievements-photo img.zoomed {
     object-position: center 70%;
     transform: scale(1.2);
-}
-
-.racer-photo img.zoomed {
-    object-position: center 70%;
-    transform: scale(1.1);
 }
 
 .achievements-info {
@@ -1239,6 +1086,7 @@ body {
     padding-top: 20px;
     max-width: 640px;
     margin: 0 auto;
+    text-align: center;
 }
 
 .apply-info {
@@ -1280,6 +1128,7 @@ body {
     border-radius: 16px;
     box-shadow: 0 0 30px rgba(0, 255, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.03);
     transition: all 0.4s ease;
+    text-align: left;
 }
 
 .apply-form::before {
@@ -1314,6 +1163,7 @@ body {
     letter-spacing: 2px;
     padding-left: 4px;
     text-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+    text-align: left;
 }
 
 .form-group label .required {
@@ -1602,39 +1452,15 @@ body {
 }
 
 @media (max-width: 768px) {
-    .header {
-        padding-top: 20px;
-        padding-bottom: 20px;
-    }
-
-    .logo-img {
-        width: 120px;
-        height: 120px;
-    }
-
-    .logo-text {
-        font-size: 1.8rem;
-    }
+    .header { padding: 20px 0; }
+    .logo-img { width: 120px; height: 120px; }
 }
 
 @media (max-width: 576px) {
-    .racers-container {
-        grid-template-columns: 1fr;
-    }
-
-    .id-card {
-        height: 250px;
-    }
-
-    .buttons-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .menu-btn {
-        width: 100%;
-        max-width: 300px;
-    }
+    .racers-container { grid-template-columns: 1fr; }
+    .id-card { height: 300px; }
+    .buttons-container { flex-direction: column; align-items: center; }
+    .menu-btn { width: 100%; max-width: 300px; }
 
     .catalog-grid { grid-template-columns: 1fr; gap: 18px; }
     .catalog-img { aspect-ratio: 16 / 9; }
@@ -1653,117 +1479,24 @@ body {
     .form-status { font-size: 0.85rem; }
     .form-status.show { padding: 12px 15px; }
 
-    .modal-content {
-        padding: 25px;
-        max-height: 90vh;
-    }
-
-    .modal-title {
-        font-size: 1.4rem;
-        padding-right: 30px;
-    }
-
-    .modal-subtitle {
-        font-size: 1.2rem;
-    }
-
-    .rank-name {
-        font-size: 1rem;
-    }
-
-    .rank-roman,
-    .rank-translation {
-        font-size: 0.9rem;
-    }
-
-    .achievements-modal-content {
-        padding: 20px;
-        max-height: 90vh;
-        max-width: 95%;
-    }
-
-    .achievements-header {
-        flex-direction: row;
-        align-items: flex-start;
-        text-align: left;
-        gap: 15px;
-    }
-
-    .achievements-info {
-        text-align: left;
-        flex: 1;
-    }
-
-    .achievements-name {
-        font-size: 1.4rem;
-    }
-
-    .achievements-photo {
-        width: 140px;
-        height: 180px;
-        font-size: 2rem;
-        flex-shrink: 0;
-    }
-
-    .achievement-list {
-        grid-template-columns: 1fr;
-    }
-
-    .section-title {
-        font-size: 1.1rem;
-    }
+    .achievements-modal-content { padding: 20px; max-height: 90vh; max-width: 95%; }
+    .achievements-header { flex-direction: row; align-items: flex-start; text-align: left; gap: 15px; }
+    .achievements-name { font-size: 1.4rem; }
+    .achievements-photo { width: 140px; height: 180px; font-size: 2rem; }
+    .achievement-list { grid-template-columns: 1fr; }
+    .section-title { font-size: 1.1rem; }
 }
 
 @media (max-width: 480px) {
-    .container {
-        padding: 10px;
-    }
+    .container { padding: 10px; }
+    .header { padding: 15px 0; }
+    .logo-img { width: 100px; height: 100px; }
+    .logo-circle { border-width: 3px; }
+    .logo-circle::before { border-width: 2px; box-shadow: 0 0 15px #0f0; }
 
-    .header {
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
-
-    .logo-img {
-        width: 100px;
-        height: 100px;
-    }
-
-    .logo-text {
-        font-size: 1.4rem;
-        letter-spacing: 2px;
-    }
-
-    .logo-circle {
-        border-width: 3px;
-    }
-
-    .logo-circle::before {
-        border-width: 2px;
-        box-shadow: 0 0 15px #0f0;
-    }
-
-    .welcome-text {
-        font-size: 1rem;
-        padding: 12px;
-        line-height: 1.4;
-        margin-bottom: 25px;
-    }
-
-    .menu-btn {
-        min-width: 180px;
-        font-size: 0.9rem;
-        padding: 12px 20px;
-        width: 100%;
-        max-width: 260px;
-    }
-
-    .buttons-container {
-        flex-direction: column;
-        gap: 12px;
-        margin-top: 25px;
-        align-items: center;
-    }
+    .welcome-text { font-size: 1rem; padding: 12px; line-height: 1.4; margin-bottom: 25px; }
+    .menu-btn { min-width: 180px; font-size: 0.9rem; padding: 12px 20px; width: 100%; max-width: 260px; }
+    .buttons-container { flex-direction: column; gap: 12px; margin-top: 25px; align-items: center; }
 
     .social-buttons-container {
         flex-direction: row;
@@ -1775,86 +1508,23 @@ body {
         -webkit-overflow-scrolling: touch;
     }
 
-    .social-btn {
-        width: 55px;
-        height: 55px;
-        font-size: 0.7rem;
-        gap: 2px;
-        letter-spacing: 0.1px;
-        flex-shrink: 0;
-    }
+    .social-btn { width: 55px; height: 55px; font-size: 0.7rem; gap: 2px; flex-shrink: 0; }
+    .social-btn i { font-size: 1.35rem !important; }
+    .social-btn:active { transform: scale(0.95) !important; }
 
-    .social-btn i {
-        font-size: 1.35rem !important;
-    }
+    .missions-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+    .mission-img { height: 100px; }
+    .mission-link { padding: 10px; font-size: 0.8rem; }
 
-    .social-btn:active {
-        transform: scale(0.95) !important;
-        transition: transform 0.1s ease;
-    }
+    .page-title { font-size: 1.4rem; margin-bottom: 15px; letter-spacing: 2px; text-align: center; }
+    .system-info { font-size: 0.9rem; padding: 12px; margin-bottom: 20px; }
 
-    .social-buttons-container::-webkit-scrollbar {
-        height: 3px;
-    }
+    .back-btn { padding: 8px 15px; font-size: 0.85rem; }
 
-    .social-buttons-container::-webkit-scrollbar-thumb {
-        background: rgba(0, 255, 0, 0.5);
-        border-radius: 2px;
-    }
-
-    .missions-grid {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 15px;
-    }
-
-    .mission-card {
-        transform: none;
-        height: auto;
-    }
-
-    .mission-card:hover {
-        transform: translateY(-3px);
-    }
-
-    .mission-img {
-        height: 100px;
-    }
-
-    .mission-link {
-        padding: 10px;
-        font-size: 0.8rem;
-    }
-
-    .page-title {
-        font-size: 1.4rem;
-        margin-bottom: 15px;
-    }
-
-    .system-info {
-        font-size: 0.9rem;
-        padding: 12px;
-        margin-bottom: 20px;
-    }
-
-    .ranking-info {
-        font-size: 0.9rem;
-        padding: 12px;
-        margin-bottom: 20px;
-    }
-
-    .racers-container {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .back-btn {
-        padding: 8px 15px;
-        font-size: 0.85rem;
-    }
-
+    /* Карточки рэйсеров на мобильных — тоже выше */
     .id-card {
         height: auto;
-        min-height: 180px;
+        min-height: 260px;
         padding: 12px;
         transform: none !important;
     }
@@ -1863,70 +1533,25 @@ body {
         transform: translateY(-5px) !important;
     }
 
-    .card-logo {
-        width: 120px;
-        height: 24px;
-        font-size: 0.6rem;
-        top: 20px;
-        left: 8px;
-    }
-
-    .racer-photo-container {
-        width: 120px;
-        height: 160px;
-        top: 55px;
-        left: 8px;
-        font-size: 1.5rem;
-    }
+    .card-logo { width: 120px; height: 24px; font-size: 0.6rem; top: 15px; left: 8px; }
+    .racer-photo-container { width: 120px; height: 200px; top: 50px; left: 8px; font-size: 1.5rem; }
 
     .racer-info {
         position: relative;
         top: auto;
         right: auto;
         width: calc(100% - 140px);
-        flex-direction: column;
-        gap: 2px;
-        margin-top: 8px;
+        gap: 6px;
+        margin-top: 6px;
         margin-left: 140px;
     }
 
-    .info-item {
-        font-size: 0.9rem;
-        padding-bottom: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+    .info-item { font-size: 0.9rem; padding-bottom: 14px; }
+    .info-label { font-size: 0.8rem; margin-right: 10px; }
+    .info-value { font-size: 0.85rem; }
+    .racer-signature { font-size: 1.8rem; bottom: 8px; right: 12px; }
+    .neon-stripe { bottom: 6px; width: 50%; }
 
-    .info-label {
-        font-size: 0.85rem;
-        margin-right: 10px;
-        flex-shrink: 0;
-    }
-
-    .info-value {
-        font-size: 0.9rem;
-        text-align: right;
-    }
-
-    .racer-signature {
-        font-size: 2rem;
-        bottom: 8px;
-        right: 12px;
-    }
-
-    .neon-stripe {
-        bottom: 6px;
-        width: 50%;
-    }
-
-    .main-content {
-        padding: 15px;
-        min-height: auto;
-    }
-
-    .about-page,
-    .ranking-page {
-        padding-top: 15px;
-    }
+    .main-content { padding: 15px; min-height: auto; }
+    .about-page, .ranking-page { padding-top: 15px; }
 }
