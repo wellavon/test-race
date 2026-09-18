@@ -724,7 +724,6 @@ function generateApplyPage(preselectedProject = '') {
                     <select id="applyProject" name="project" required>
                         <option value="">— Выбери проект —</option>
                         ${projectsOptions}
-                        <option value="Другое">Другое (напишу в комментарии)</option>
                     </select>
                 </div>
 
