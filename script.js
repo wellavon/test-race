@@ -722,15 +722,6 @@ function generateApplyPage(preselectedProject = '') {
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="applyExperience">Опыт / уровень</label>
-                    <select id="applyExperience" name="experience">
-                        <option value="Новичок">Новичок</option>
-                        <option value="Любитель">Любитель (1-2 года)</option>
-                        <option value="Продвинутый">Продвинутый (3+ года)</option>
-                        <option value="Профессионал">Профессионал</option>
-                    </select>
-                </div>
 
                 <div class="form-group">
                     <label for="applyAbout">О себе / ссылки на видео</label>
@@ -840,7 +831,6 @@ async function submitApplication(event) {
                 name: name,
                 telegram: telegram,
                 project: project,
-                experience: experience,
                 about: about,
                 time: new Date().toISOString()
             })
