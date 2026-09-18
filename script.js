@@ -69,6 +69,20 @@ function updateRacerScores() {
 
 // Данные для сайта
 const missionData = [
+    { id: 32, name: "Миссия 32", link: "https://youtu.be/x7qO3zcMh2Y", image: "lobby" },
+    { id: 31, name: "Миссия 31", link: "https://youtu.be/WVO--liuNb0", image: "acai" },
+    { id: 30, name: "Миссия 30", link: "https://youtu.be/lThYVe_TIag", image: "wet" },
+    { id: 29, name: "Миссия 29", link: "https://youtu.be/-BQ-FOM4jFE", image: "chat" },
+    { id: 28, name: "Миссия 28", link: "https://youtu.be/uEwhlGxXHOU", image: "bad2" },
+    { id: 27, name: "Миссия 27", link: "https://youtu.be/tYnYY4FtVDs", image: "rush" },
+    { id: 26, name: "Миссия 26", link: "https://youtu.be/Cc39vf6tpfY", image: "bad_ateez" },
+    { id: 25, name: "Миссия 25", link: "https://youtu.be/k_9apuCaMVw", image: "hitem" },
+    { id: 24, name: "Миссия 24", link: "https://youtu.be/pCDSQeh3Wbs", image: "okay" },
+    { id: 23, name: "Миссия 23", link: "https://youtu.be/xeHsGngi98Y?si=SH2XSQdZnaJdJ19E", image: "adf" },
+    { id: 22, name: "Миссия 22", link: "https://youtu.be/jjtmxb_5wmg", image: "boompala" },
+    { id: 21, name: "Миссия 21", link: "https://youtu.be/SP97yMwEnBc", image: "bad" },
+    { id: 20, name: "Миссия 20", link: "https://youtu.be/DXMT24Xst8c?si=88ElTD-ypwF4hCWk", image: "redred" },
+    { id: 19, name: "Миссия 19", link: "https://youtu.be/ioF31qa4miw", image: "drift" },
     { id: 18, name: "Миссия 18", link: "https://youtu.be/Hhrery2tIGQ?si=SxE6N9N3lJChQWb3", image: "pinky_up" },
     { id: 17, name: "Миссия 17", link: "https://youtu.be/ci8WH8tiQhg?si=78S7M2mxW3n31KIc", image: "r2r" },
     { id: 16, name: "Миссия 16", link: "https://youtu.be/h9pVcf1CuAI", image: "one_bite" },
@@ -100,16 +114,24 @@ const racersData = [
             projects: ["P1Harmony - Pretty Boy", "Ateez - In Your Fantasy", "XLOV - 1&Only",
                 "Yena - Wicked Love", "Stray Kids - Ceremony", "All(h)ours - Gotcha", "Ateez - Shaboom",
                 "Monsta X - Do What I Want", "Xikers - Superpower", "Stray Kids - Do It", "Kid Phenomenon - Party Over There",
-                "Lngshot - Saucin'", "Ateez - Adrenaline", "Nexz - One Bite", "All(h)ours - Ready 2 Rumble", "One Or Eight - Tokyo Drift"],
+                "Lngshot - Saucin'", "Ateez - Adrenaline", "Nexz - One Bite", "All(h)ours - Ready 2 Rumble", "One Or Eight - Tokyo Drift",
+                "Cortis - RedRed", "The Jet Boy Bangerz - Gear5 + B.A.D", "Le Sserafim - Boompala", "Xikers - OKay", "Ateez - BAD", "&Team - Rush", 
+                       "Ateez - BAD (Wedding Ver)", "Girlset - Chat", "J.Y.Park - Wet", "Cortis - Acai", "Tobii - Hotel Lobby"],
             festivals: ["Venom Fest (27.04.25)", "CoverLand (27.04.25)", "ANM Dance Festival (29.06.25)",
                 "DEEPFEST SUMMER 2025 (29.06.25)", "1Y (17.08.25) - Boys", "1Y (17.08.25) - Solo/Duo With Team", "lll кубок Москвы (30.08.25)",
                 "ANM Dance Festival (14.09.25)", "CoverLand (14.12.25)", "DEEPFEST WINTER 2025 (21.12.25)", "K-DOM Champ (11.01.26)",
-                "ANM Dance Festival (8.02.26)", "Coolapalooza (22.03.26)", "Venom Fest (19.04.26)", "1Y (3.05.26)"],
+                "ANM Dance Festival (8.02.26)", "Coolapalooza (22.03.26)", "Venom Fest (19.04.26)", "1Y (3.05.26)", "ADF (16.05.26)", "DEEPFEST SUMMER 2026 (21.06.26)",
+                       "ANM Dance Festival (28.06.26)", "K-POP COVER BATTLE (11.07.26)", "CHOOM BATTLE (18.07.26)", "VK ADF (18.07.26)", "1Y (30.08.26) - Solo/Duo with team",
+                        "1Y (30.08.26) - Who's next"],
             wins: [
                 { place: 1, festival: "Venom Fest (27.04.25)" },
                 { place: 1, festival: "1Y (17.08.25) - Boys" },
                 { place: 1, festival: "1Y (3.05.26)" },
+                { place: 1, festival: "K-POP COVER BATTLE (11.07.26)" },
+                { place: 1, festival: "CHOOM BATTLE (18.07.26)" },
                 { place: 2, festival: "ANM Dance Festival (8.02.26)" },
+                { place: 2, festival: "DEEPFEST SUMMER 2026 (21.06.26)" },
+                { place: 2, festival: "VK ADF (18.07.26)" },
                 { place: 3, festival: "ANM Dance Festival (14.09.25)" },
                 { place: 3, festival: "DEEPFEST WINTER 2025 (21.12.25)" },
                 { place: 3, festival: "Coolapalooza (22.03.26)" }
@@ -128,21 +150,28 @@ const racersData = [
                 "Yena - Wicked Love", "Stray Kids - Ceremony", "All(h)ours - Gotcha", "Ateez - Shaboom",
                 "Monsta X - Do What I Want", "Xikers - Superpower", "Itzy - Tunnel Vision", "Stray Kids - Do It", "Kid Phenomenon - Party Over There",
                 "Lngshot - Saucin'", "Ateez - Adrenaline", "Nexz - One Bite", "All(h)ours - Ready 2 Rumble", "One Or Eight - Tokyo Drift",
-                      "Katseye - Pinky Up"],
+                      "Katseye - Pinky Up", "Cortis - RedRed", "The Jet Boy Bangerz - Gear5 + B.A.D", "Le Sserafim - Boompala", "Xikers - OKay", "Meovv - Hit 'Em",
+                      "Ateez - BAD", "&Team - Rush", "Ateez - BAD (Wedding Ver)", "Girlset - Chat", "J.Y.Park - Wet", "Cortis - Acai", "Tobii - Hotel Lobby"],
             festivals: ["Venom Fest (27.04.25)", "CoverLand (27.04.25)", "ANM Dance Festival (29.06.25)",
                 "DEEPFEST SUMMER 2025 (29.06.25)", "1Y (17.08.25) - Boys", "1Y (17.08.25) - Solo/Duo With Team", "lll кубок Москвы (30.08.25)",
                 "ANM Dance Festival (14.09.25)", "CoverLand (14.12.25)", "DEEPFEST WINTER 2025 (21.12.25)", "K-DOM Champ (11.01.26)",
-                "ANM Dance Festival (8.02.26)", "Coolapalooza (22.03.26)", "Venom Fest (19.04.26)", "1Y (3.05.26)"],
+                "ANM Dance Festival (8.02.26)", "Coolapalooza (22.03.26)", "Venom Fest (19.04.26)", "1Y (3.05.26)", "ADF (16.05.26)", "DEEPFEST SUMMER 2026 (21.06.26)",
+                       "ANM Dance Festival (28.06.26)", "K-POP COVER BATTLE (11.07.26)", "CHOOM BATTLE (18.07.26)", "VK ADF (18.07.26)", "1Y (30.08.26) - Solo/Duo with team",
+                        "1Y (30.08.26) - Who's next"],
             wins: [
                 { place: 1, festival: "Venom Fest (27.04.25)" },
                 { place: 1, festival: "1Y (17.08.25) - Boys" },
                 { place: 1, festival: "1Y (3.05.26)" },
+                { place: 1, festival: "K-POP COVER BATTLE (11.07.26)" },
+                { place: 1, festival: "CHOOM BATTLE (18.07.26)" },
                 { place: 2, festival: "ANM Dance Festival (8.02.26)" },
+                { place: 2, festival: "DEEPFEST SUMMER 2026 (21.06.26)" },
+                { place: 2, festival: "VK ADF (18.07.26)" },
                 { place: 3, festival: "ANM Dance Festival (14.09.25)" },
                 { place: 3, festival: "DEEPFEST WINTER 2025 (21.12.25)" },
                 { place: 3, festival: "Coolapalooza (22.03.26)" }
             ],
-            bonus: 100
+            bonus: 150
         }
     },
     {
@@ -153,14 +182,20 @@ const racersData = [
         photo: "budilya",
         achievements: {
             projects: ["Ateez - In Your Fantasy", "Ateez - Shaboom", "Xikers - Superpower", "Lngshot - Saucin'", "Nexz - One Bite",
-                "Ateez - Adrenaline", "One Or Eight - Tokyo Drift", "Katseye - Pinky Up"
+                "Ateez - Adrenaline", "One Or Eight - Tokyo Drift", "Katseye - Pinky Up", "Cortis - RedRed", "The Jet Boy Bangerz - Gear5 + B.A.D", 
+                "Le Sserafim - Boompala", "Xikers - OKay", "Ateez - BAD", "&Team - Rush", "Ateez - BAD (Wedding Ver)", "Cortis - Acai"
             ],
             festivals: ["1Y (17.08.25) - Boys", "CoverLand (14.12.25)", "K-DOM Champ (11.01.26)", "ANM Dance Festival (8.02.26)", 
-                        "Venom Fest (19.04.26)", "1Y (3.05.26)"],
+                        "Venom Fest (19.04.26)", "1Y (3.05.26)", "ADF (16.05.26)", "DEEPFEST SUMMER 2026 (21.06.26)", "ANM Dance Festival (28.06.26)",
+                        "K-POP COVER BATTLE (11.07.26)", "CHOOM BATTLE (18.07.26)", "VK ADF (18.07.26)"],
             wins: [
                 { place: 1, festival: "1Y (17.08.25) - Boys" },
                 { place: 1, festival: "1Y (3.05.26)" },
-                { place: 2, festival: "ANM Dance Festival (8.02.26)" }
+                { place: 1, festival: "K-POP COVER BATTLE (11.07.26)" },
+                { place: 1, festival: "CHOOM BATTLE (18.07.26)" },
+                { place: 2, festival: "ANM Dance Festival (8.02.26)" },
+                { place: 2, festival: "DEEPFEST SUMMER 2026 (21.06.26)" },
+                { place: 2, festival: "VK ADF (18.07.26)" }
             ]
         }
     },
@@ -171,11 +206,14 @@ const racersData = [
         score: 0, // Будет автоматически рассчитано
         photo: "sai",
         achievements: {
-            projects: ["XLOV - 1&Only", "Kid Phenomenon - Party Over There", "Lngshot - Saucin'", "Ateez - Adrenaline", "One Or Eight - Tokyo Drift"],
-            festivals: ["DEEPFEST WINTER 2025 (21.12.25)", "K-DOM Champ (11.01.26)", "Venom Fest (19.04.26)", "1Y (3.05.26)"],
+            projects: ["XLOV - 1&Only", "Kid Phenomenon - Party Over There", "Lngshot - Saucin'", "Ateez - Adrenaline", "One Or Eight - Tokyo Drift",
+                      "The Jet Boy Bangerz - Gear5 + B.A.D", "Ateez - BAD", "Ateez - BAD (Wedding Ver)", "Girlset - Chat"],
+            festivals: ["DEEPFEST WINTER 2025 (21.12.25)", "K-DOM Champ (11.01.26)", "Venom Fest (19.04.26)", "1Y (3.05.26)", "ADF (16.05.26)",
+                       "VK ADF (18.07.26)"],
             wins: [
                 { place: 1, festival: "1Y (3.05.26)" },
-                { place: 3, festival: "DEEPFEST WINTER 2025 (21.12.25)" }
+                { place: 3, festival: "DEEPFEST WINTER 2025 (21.12.25)" },
+                { place: 2, festival: "VK ADF (18.07.26)" }
             ]
         }
     },
@@ -186,10 +224,17 @@ const racersData = [
         score: 0, // Будет автоматически рассчитано
         photo: "ana",
         achievements: {
-            projects: ["Stray Kids - Ceremony", "Stray Kids - Do It", "Nexz - One Bite", "All(h)ours - Ready 2 Rumble", "Katseye - Pinky Up"],
-            festivals: ["ANM Dance Festival (8.02.26)", "Coolapalooza (22.03.26)"],
+            projects: ["Stray Kids - Ceremony", "Stray Kids - Do It", "Nexz - One Bite", "All(h)ours - Ready 2 Rumble", "Katseye - Pinky Up",
+                      "Cortis - RedRed", "The Jet Boy Bangerz - Gear5 + B.A.D", "Le Sserafim - Boompala", "Xikers - OKay", "Ateez - BAD", "&Team - Rush",
+                      "Ateez - BAD (Wedding Ver)", "Girlset - Chat", "Cortis - Acai", "Tobii - Hotel Lobby"],
+            festivals: ["ANM Dance Festival (8.02.26)", "Coolapalooza (22.03.26)", "ADF (16.05.26)", "DEEPFEST SUMMER 2026 (21.06.26)", "ANM Dance Festival (28.06.26)",
+                       "K-POP COVER BATTLE (11.07.26)", "CHOOM BATTLE (18.07.26)", "VK ADF (18.07.26)", "1Y (30.08.26) - Who's next"],
             wins: [
+                { place: 1, festival: "K-POP COVER BATTLE (11.07.26)" },
+                { place: 1, festival: "CHOOM BATTLE (18.07.26)" },
                 { place: 2, festival: "ANM Dance Festival (8.02.26)" },
+                { place: 2, festival: "DEEPFEST SUMMER 2026 (21.06.26)" },
+                { place: 2, festival: "VK ADF (18.07.26)" },
                 { place: 3, festival: "Coolapalooza (22.03.26)" }
             ]
         }
@@ -201,13 +246,32 @@ const racersData = [
         score: 0, // Будет автоматически рассчитано
         photo: "vanyaslay",
         achievements: {
-            projects: ["All(h)ours - Gotcha", "All(h)ours - Ready 2 Rumble", "One Or Eight - Tokyo Drift"],
+            projects: ["All(h)ours - Gotcha", "All(h)ours - Ready 2 Rumble", "One Or Eight - Tokyo Drift", "Le Sserafim - Boompala", "Xikers - OKay", "&Team - Rush"],
             festivals: ["lll кубок Москвы (30.08.25)", "ANM Dance Festival (14.09.25)", "Coolapalooza (22.03.26)", 
-                        "Venom Fest (19.04.26)", "1Y (3.05.26)"],
+                        "Venom Fest (19.04.26)", "1Y (3.05.26)", "DEEPFEST SUMMER 2026 (21.06.26)", "ANM Dance Festival (28.06.26)", 
+                        "K-POP COVER BATTLE (11.07.26)", "CHOOM BATTLE (18.07.26)"],
             wins: [
                 { place: 1, festival: "1Y (3.05.26)" },
+                { place: 1, festival: "K-POP COVER BATTLE (11.07.26)" },
+                { place: 1, festival: "CHOOM BATTLE (18.07.26)" },
+                { place: 2, festival: "DEEPFEST SUMMER 2026 (21.06.26)" },
                 { place: 3, festival: "ANM Dance Festival (14.09.25)" },
                 { place: 3, festival: "Coolapalooza (22.03.26)" }
+            ]
+        }
+    },
+    {
+        id: "1012.3",
+        name: "Tokbok",
+        class: "", // Будет автоматически рассчитано
+        score: 0, // Будет автоматически рассчитано
+        photo: "tokbok",
+        achievements: {
+            projects: ["One Or Eight - Tokyo Drift", "&Team - Rush"],
+            festivals: ["1Y (3.05.26)", "K-POP COVER BATTLE (11.07.26)"],
+            wins: [
+                { place: 1, festival: "1Y (3.05.26)" },
+                { place: 1, festival: "K-POP COVER BATTLE (11.07.26)" }
             ]
         }
     }
@@ -338,7 +402,7 @@ function generateRankingPage() {
             <div class="card-logo">racer card</div>
             <div class="racer-photo-container">
                 <div class="racer-photo">
-                    <img src="${racer.photo}.png" alt="${racer.name}" ${['corey', 'minka', 'tveva', 'vanyaslay'].includes(racer.photo) ? 'class="zoomed"' : ''}>
+                    <img src="${racer.photo}.png" alt="${racer.name}" ${['corey', 'minka', 'tveva', 'vanyaslay', 'tokbok'].includes(racer.photo) ? 'class="zoomed"' : ''}>
                 </div>
             </div>
             <div class="racer-info">
@@ -436,7 +500,7 @@ function openRacerAchievements(racerId) {
 
     const contentHTML = `
         <div class="achievements-header">
-            <div class="achievements-photo"><img src="${racer.photo}.png" alt="${racer.name}"${['corey', 'minka', 'tveva', 'vanyaslay'].includes(racer.photo) ? ' class="zoomed"' : ''}></div>
+            <div class="achievements-photo"><img src="${racer.photo}.png" alt="${racer.name}"${['corey', 'minka', 'tveva', 'vanyaslay', 'tokbok'].includes(racer.photo) ? ' class="zoomed"' : ''}></div>
             <div class="achievements-info">
                 <h2 class="achievements-name">${getDisplayName(racer.id, false)}</h2>
 
