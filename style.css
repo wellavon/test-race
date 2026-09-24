@@ -1462,7 +1462,7 @@ body {
 
     .id-card {
         height: auto;
-        min-height: 270px;
+        min-height: 300px;
         transform: none !important;
         padding: 15px;
     }
@@ -1533,7 +1533,7 @@ body {
 
     .back-btn { padding: 8px 15px; font-size: 0.85rem; }
 
-    /* КАРТОЧКИ РЭЙСЕРОВ — фото 3:4, увеличено */
+    /* КАРТОЧКИ РЭЙСЕРОВ: резиновая высота, фото не режется */
     .racers-container {
         grid-template-columns: 1fr;
         gap: 15px;
@@ -1541,7 +1541,7 @@ body {
 
     .id-card {
         height: auto;
-        min-height: 260px;
+        min-height: 300px;
         padding: 12px;
         transform: none !important;
     }
@@ -1551,17 +1551,17 @@ body {
     }
 
     .card-logo {
-        width: 110px;
-        height: 22px;
-        font-size: 0.55rem;
+        width: 120px;
+        height: 34px;
+        font-size: 0.6rem;
         top: 15px;
         left: 8px;
     }
 
     .racer-photo-container {
-        width: 115px;
-        aspect-ratio: 3 / 4;
-        top: 48px;
+        width: 120px;
+        height: 220px;
+        top: 50px;
         left: 8px;
         font-size: 1.5rem;
     }
@@ -1570,15 +1570,15 @@ body {
         position: relative;
         top: auto;
         right: auto;
-        width: calc(100% - 130px);
-        gap: 6px;
-        margin-top: 4px;
-        margin-left: 130px;
+        width: calc(100% - 140px);
+        gap: 8px;
+        margin-top: 6px;
+        margin-left: 140px;
     }
 
     .info-item {
         font-size: 0.9rem;
-        padding-bottom: 12px;
+        padding-bottom: 14px;
     }
 
     .info-label {
@@ -1591,7 +1591,7 @@ body {
     }
 
     .racer-signature {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         bottom: 8px;
         right: 12px;
     }
