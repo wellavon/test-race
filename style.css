@@ -539,8 +539,8 @@ body {
     position: absolute;
     top: 15px;
     left: 15px;
-    width: 135px;
-    height: 40px;
+    width: 140px;
+    height: 35px;
     border: 2px solid #fff;
     border-radius: 4px;
     display: flex;
@@ -561,7 +561,7 @@ body {
     top: 65px;
     left: 15px;
     width: 140px;
-    height: 230px;
+    height: 222px;
     background-color: #111;
     border-radius: 8px;
     display: flex;
@@ -1551,7 +1551,7 @@ body {
     }
 
     .card-logo {
-        width: 125px;
+        width: 135px;
         height: 40px;
         font-size: 0.7rem;
         top: 15px;
@@ -1560,7 +1560,7 @@ body {
 
     .racer-photo-container {
         width: 130px;
-        height: 230px;
+        height: 222px;
         top: 50px;
         left: 8px;
         font-size: 1.5rem;
