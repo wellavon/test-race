@@ -1551,8 +1551,8 @@ body {
     }
 
     .card-logo {
-        width: 135px;
-        height: 40px;
+        width: 130px;
+        height: 35px;
         font-size: 0.7rem;
         top: 15px;
         left: 8px;
@@ -1560,7 +1560,7 @@ body {
 
     .racer-photo-container {
         width: 130px;
-        height: 222px;
+        height: 195px;
         top: 50px;
         left: 8px;
         font-size: 1.5rem;
