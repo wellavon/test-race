@@ -539,15 +539,15 @@ body {
     position: absolute;
     top: 15px;
     left: 15px;
-    width: 130px;
-    height: 35px;
+    width: 135px;
+    height: 40px;
     border: 2px solid #fff;
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: #0f0;
     background-color: #000;
@@ -560,8 +560,8 @@ body {
     position: absolute;
     top: 65px;
     left: 15px;
-    width: 130px;
-    height: 220px;
+    width: 140px;
+    height: 230px;
     background-color: #111;
     border-radius: 8px;
     display: flex;
@@ -1551,16 +1551,16 @@ body {
     }
 
     .card-logo {
-        width: 120px;
-        height: 34px;
-        font-size: 0.6rem;
+        width: 125px;
+        height: 40px;
+        font-size: 0.7rem;
         top: 15px;
         left: 8px;
     }
 
     .racer-photo-container {
-        width: 120px;
-        height: 220px;
+        width: 130px;
+        height: 230px;
         top: 50px;
         left: 8px;
         font-size: 1.5rem;
